@@ -9,4 +9,9 @@ const ticketSchema=new mongoose.Schema({
     numberOfPassengers: {type:Number,required:true},
     totalPrice: {type:Number,required:true},
 });
+// autocalculate
+ticketSchema.pre("save",function(next){
+    this.totalPrice=this.perHeadPrice*this.numberOfPassengers;
+    next();
+});
 module.exports=mongoose.model("Ticket",ticketSchema)
